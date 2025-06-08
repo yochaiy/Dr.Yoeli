@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>שלב א - גינקולוגיה</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+      direction: rtl;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow-wrap: break-word;
+      position: relative;
+      min-height: 500px;
+    }
+    .question {
+      display: none;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .question.active {
+      display: block;
+    }
+    .question pre, .answer pre {
+      font-size: 18px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .answer {
+      display: none;
+      background: #eef;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    .question img {
+      max-width: 100%;
+      height: auto;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 5px 0 5px;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .back-home {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .back-home a {
+      color: #004080;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>שאלות חזרה - אי פיריון 47 שאלות</h1>
+    <div id="questions">
+      <!-- השאלות יוזנו כאן על ידי JavaScript -->
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="prevQuestion()">הקודם</button>
+      <button onclick="showAnswer()">תשובה</button>
+      <button onclick="nextQuestion()">הבא</button>
+    </div>
+
+    <div class="back-home">
+      <a href="index.html">← חזרה לעמוד הבית</a>
+    </div>
+  </div>
+
+  <script src="questions8.js"></script>
+  <script>
+    let current = 0;
+
+    function renderQuestion() {
+      const questionsContainer = document.getElementById("questions");
+      questionsContainer.innerHTML = "";
+      const q = questionsData[current];
+
+      const div = document.createElement("div");
+      div.className = "question active";
+
+      let imageHtml = "";
+      if (q.image) {
+        imageHtml = `<img src="${q.image}" alt="תמונה לשאלה">`;
+      }
+
+      div.innerHTML = `<pre>${q.question}</pre>${imageHtml}<div class="answer" id="answer"><pre>${q.answer}</pre></div>`;
+      questionsContainer.appendChild(div);
+    }
+
+    function showAnswer() {
+      const answerDiv = document.getElementById("answer");
+      if (answerDiv) {
+        answerDiv.style.display = "block";
+      }
+    }
+
+    function nextQuestion() {
+      if (current < questionsData.length - 1) {
+        current++;
+        renderQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (current > 0) {
+        current--;
+        renderQuestion();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      if (typeof questionsData !== 'undefined' && questionsData.length > 0) {
+        renderQuestion();
+      }
+    });
+  </script>
+</body>
+</html>
