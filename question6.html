@@ -49,16 +49,11 @@
       padding: 10px 20px;
       font-size: 16px;
       cursor: pointer;
+      margin: 10px 5px 0 5px;
     }
     .nav-buttons {
-      position: fixed;
-      top: 50%;
-      right: 20px;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      z-index: 1000;
+      text-align: center;
+      margin-top: 30px;
     }
     .back-home {
       text-align: center;
@@ -78,21 +73,21 @@
     <div id="questions">
       <!-- השאלות יוזנו כאן על ידי JavaScript -->
     </div>
+
+    <div class="nav-buttons">
+      <button onclick="prevQuestion()">הקודם</button>
+      <button onclick="showAnswer()">תשובה</button>
+      <button onclick="nextQuestion()">הבא</button>
+    </div>
+
     <div class="back-home">
       <a href="index.html">← חזרה לעמוד הבית</a>
     </div>
   </div>
 
-  <div class="nav-buttons">
-    <button onclick="prevQuestion()">הקודם</button>
-    <button onclick="showAnswer()">תשובה</button>
-    <button onclick="nextQuestion()">הבא</button>
-  </div>
-
   <script src="questions6.js"></script>
   <script>
     let current = 0;
-
     function renderQuestion() {
       const questionsContainer = document.getElementById("questions");
       questionsContainer.innerHTML = "";
@@ -102,28 +97,24 @@
       div.innerHTML = `<pre>${q.question}</pre><div class="answer" id="answer"><pre>${q.answer}</pre></div>`;
       questionsContainer.appendChild(div);
     }
-
     function showAnswer() {
       const answerDiv = document.getElementById("answer");
       if (answerDiv) {
         answerDiv.style.display = "block";
       }
     }
-
     function nextQuestion() {
       if (current < questionsData.length - 1) {
         current++;
         renderQuestion();
       }
     }
-
     function prevQuestion() {
       if (current > 0) {
         current--;
         renderQuestion();
       }
     }
-
     document.addEventListener("DOMContentLoaded", function() {
       if (typeof questionsData !== 'undefined' && questionsData.length > 0) {
         renderQuestion();
